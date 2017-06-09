@@ -10,8 +10,8 @@ publicHtmlDir="public_html"
 rootPublicHtmlDir=~/"${publicHtmlDir}"
 
 ## Copy public_html
-printf "Copying public_html and scripts...\n"
-mkdir -p "${rootPublicHtmlDir}/r"
+printf "Copying public_html...\n"
+mkdir -p "${rootPublicHtmlDir}"
 
 cp -Rf "${publicHtmlDir}"/* "${rootPublicHtmlDir}"/
 
