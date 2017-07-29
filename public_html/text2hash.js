@@ -2,6 +2,13 @@ $(document).ready(function(){
 
 	var calcHash = function() {
 
+		var text = $('#comment').val();
+		if(!text)
+		{
+			$("#hashed").val("");
+			return;
+		}
+
 		var md;
 		switch($("#alg-select option:selected").val())
 		{
@@ -25,14 +32,8 @@ $(document).ready(function(){
 				break;
 		}
 
-		var text = $('#comment').val();
-		if(text === "")
-			$("#hashed").val("");
-		else
-		{
-			md.update(text);
-			$("#hashed").val(md.digest().toHex());
-		}
+		md.update(text);
+		$("#hashed").val(md.digest().toHex());
 	};
 
 
