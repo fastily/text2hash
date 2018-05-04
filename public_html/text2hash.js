@@ -32,7 +32,7 @@ $(document).ready(function(){
 				break;
 		}
 
-		md.update(text);
+		md.update(text, 'utf8');
 		$("#hashed").val(md.digest().toHex());
 	};
 
