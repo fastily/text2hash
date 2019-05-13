@@ -15,7 +15,6 @@
 	<div class="main-wrapper">
 		<nav class="navbar navbar-expand-md navbar-light bg-light">
 			<div class="container">
-				<!-- <a class="navbar-brand" href="#">text2hash</a> -->
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
 				 aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -38,7 +37,7 @@
 		</nav>
 
 		<div class="container" id="app">
-			<div class="jumbotron">
+			<div class="jumbotron mt-3">
 				<h1 class="display-4">text2hash</h1>
 				<p class="lead">(The simple text hashing tool)</p>
 			</div>
@@ -73,16 +72,16 @@
 	crossorigin="anonymous"></script>
 	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/vue/2.6.8/vue.min.js"></script>
-	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/forge/0.8.1/forge.min.js"></script>
+	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/vue/2.6.10/vue.min.js"></script>
+	<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 
 	<script>
 		new Vue({
 			el: "#app",
 			data: {
-				vals: [{ name: "sha512", type: "strong" }, { name: "sha384", type: "better" }, { name: "sha256", type: "better" },
+				vals: [{ name: "sha3-512", type: "strong" }, { name: "sha512", type: "strong" }, { name: "sha384", type: "better" }, { name: "sha256", type: "better" },
 				{ name: "sha1", type: "weak" }, { name: "md5", type: "weak" }],
-				selectedAlg: "sha512",
+				selectedAlg: "sha3-512",
 				inputText: ""
 			},
 			methods: {
@@ -90,30 +89,29 @@
 					if (!this.inputText)
 						return "";
 
-					var md;
 					switch (this.selectedAlg) {
 						case 'md5':
-							md = forge.md.md5.create();
+							return CryptoJS.MD5(this.inputText)
 							break;
 						case 'sha1':
-							md = forge.md.sha1.create();
+							return CryptoJS.SHA1(this.inputText)
 							break;
 						case 'sha256':
-							md = forge.md.sha256.create();
+							return CryptoJS.SHA256(this.inputText)
 							break;
 						case 'sha384':
-							md = forge.md.sha384.create();
+						return CryptoJS.SHA384(this.inputText)
 							break;
 						case 'sha512':
-							md = forge.md.sha512.create();
+							return CryptoJS.SHA512(this.inputText)
+							break;
+						case 'sha3-512':
+							return CryptoJS.SHA3(this.inputText)
 							break;
 						default:
 							return alert("Invalid option, should never reach here");
 							break;
 					}
-
-					md.update(this.inputText, 'utf8');
-					return md.digest().toHex();
 				}
 			}
 		});
